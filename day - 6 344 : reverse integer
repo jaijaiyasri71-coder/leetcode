@@ -1,0 +1,26 @@
+class Solution {
+
+    public void reverseString(char[] s) {
+
+        // Start pointer
+        int start = 0;
+
+        // End pointer
+        int end = s.length - 1;
+
+        // Reverse until both pointers meet
+        while (start < end) {
+
+            // Store first character
+            char temp = s[start];
+
+            // Swap first and last characters
+            s[start] = s[end];
+            s[end] = temp;
+
+            // Move pointers
+            start++;
+            end--;
+        }
+    }
+}
