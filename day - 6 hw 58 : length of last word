@@ -1,0 +1,25 @@
+class Solution {
+
+    public int lengthOfLastWord(String s) {
+
+        // Variable to store the length of the last word
+        int count = 0;
+
+        // Start from the last character of the string
+        int i = s.length() - 1;
+
+        // Ignore spaces at the end of the string
+        while (i >= 0 && s.charAt(i) == ' ') {
+            i--;
+        }
+
+        // Count characters until a space or beginning of string is reached
+        while (i >= 0 && s.charAt(i) != ' ') {
+            count++;
+            i--;
+        }
+
+        // Return the length of the last word
+        return count;
+    }
+}
