@@ -1,0 +1,13 @@
+class Solution {
+    public boolean squareIsWhite(String coordinates) {
+
+        char column = coordinates.charAt(0);
+        char row = coordinates.charAt(1);
+
+        int col = column - 'a' + 1;
+        int r = row - '0';
+
+        // If sum is even -> black, odd -> white
+        return (col + r) % 2 != 0;
+    }
+}
