@@ -1,0 +1,209 @@
+import java.util.*;
+
+class SystemInfo {
+    int id;
+    String systemName;
+    int antivirus;
+    int firewall;
+    int password;
+    int updates;
+
+    SystemInfo(int id, String systemName, int antivirus, int firewall,
+               int password, int updates) {
+        this.id = id;
+        this.systemName = systemName;
+        this.antivirus = antivirus;
+        this.firewall = firewall;
+        this.password = password;
+        this.updates = updates;
+    }
+}
+
+public class CyberRiskAssessment {
+
+    static ArrayList<SystemInfo> systems = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        int choice;
+
+        do {
+            System.out.println("\n====================================");
+            System.out.println("CYBER RISK ASSESSMENT SYSTEM");
+            System.out.println("====================================");
+            System.out.println("1. Add System");
+            System.out.println("2. View Systems");
+            System.out.println("3. Risk Assessment");
+            System.out.println("4. Security Audit");
+            System.out.println("5. Summary Report");
+            System.out.println("6. Exit");
+            System.out.print("Enter your choice: ");
+
+            choice = sc.nextInt();
+
+            switch (choice) {
+
+                case 1:
+                    addSystem();
+                    break;
+
+                case 2:
+                    viewSystems();
+                    break;
+
+                case 3:
+                    riskAssessment();
+                    break;
+
+                case 4:
+                    securityAudit();
+                    break;
+
+                case 5:
+                    summary();
+                    break;
+
+                case 6:
+                    System.out.println("Thank you!");
+                    break;
+
+                default:
+                    System.out.println("Invalid Choice!");
+            }
+
+        } while (choice != 6);
+    }
+
+    static void addSystem() {
+
+        System.out.print("System ID: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("System Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Antivirus Installed? (1-Yes / 0-No): ");
+        int antivirus = sc.nextInt();
+
+        System.out.print("Firewall Enabled? (1-Yes / 0-No): ");
+        int firewall = sc.nextInt();
+
+        System.out.print("Strong Password Used? (1-Yes / 0-No): ");
+        int password = sc.nextInt();
+
+        System.out.print("System Updated? (1-Yes / 0-No): ");
+        int updates = sc.nextInt();
+
+        systems.add(new SystemInfo(id, name, antivirus,
+                firewall, password, updates));
+
+        System.out.println("System Added Successfully.");
+    }
+
+    static void viewSystems() {
+
+        if (systems.isEmpty()) {
+            System.out.println("No Records Found.");
+            return;
+        }
+
+        System.out.println("\n---------------------------------------------------------------");
+        System.out.printf("%-5s %-15s %-5s %-5s %-5s %-5s\n",
+                "ID", "SYSTEM", "AV", "FW", "PWD", "UPD");
+        System.out.println("---------------------------------------------------------------");
+
+        for (SystemInfo s : systems) {
+
+            System.out.printf("%-5d %-15s %-5d %-5d %-5d %-5d\n",
+                    s.id, s.systemName, s.antivirus,
+                    s.firewall, s.password, s.updates);
+        }
+    }
+
+    static void riskAssessment() {
+
+        if (systems.isEmpty()) {
+            System.out.println("No Records Available.");
+            return;
+        }
+
+        for (SystemInfo s : systems) {
+
+            int score = s.antivirus + s.firewall +
+                        s.password + s.updates;
+
+            System.out.println("\nSystem : " + s.systemName);
+
+            if (score == 4)
+                System.out.println("Risk Level : LOW");
+
+            else if (score >= 2)
+                System.out.println("Risk Level : MEDIUM");
+
+            else
+                System.out.println("Risk Level : HIGH");
+        }
+    }
+
+    static void securityAudit() {
+
+        if (systems.isEmpty()) {
+            System.out.println("No Records Available.");
+            return;
+        }
+
+        for (SystemInfo s : systems) {
+
+            System.out.println("\nAudit Report for " + s.systemName);
+
+            if (s.antivirus == 0)
+                System.out.println("- Install Antivirus");
+
+            if (s.firewall == 0)
+                System.out.println("- Enable Firewall");
+
+            if (s.password == 0)
+                System.out.println("- Use Strong Password");
+
+            if (s.updates == 0)
+                System.out.println("- Update Operating System");
+
+            if (s.antivirus == 1 &&
+                s.firewall == 1 &&
+                s.password == 1 &&
+                s.updates == 1)
+
+                System.out.println("System is Secure.");
+        }
+    }
+
+    static void summary() {
+
+        int low = 0;
+        int medium = 0;
+        int high = 0;
+
+        for (SystemInfo s : systems) {
+
+            int score = s.antivirus + s.firewall +
+                        s.password + s.updates;
+
+            if (score == 4)
+                low++;
+
+            else if (score >= 2)
+                medium++;
+
+            else
+                high++;
+        }
+
+        System.out.println("\n========== SUMMARY ==========");
+        System.out.println("Total Systems : " + systems.size());
+        System.out.println("Low Risk      : " + low);
+        System.out.println("Medium Risk   : " + medium);
+        System.out.println("High Risk     : " + high);
+    }
+}
